@@ -3,7 +3,7 @@ import { Center, Link, Text } from "@chakra-ui/react";
 const Footer = (): JSX.Element => {
     return (
         <>
-            <Center>
+            <Center my={4}>
                 <Text textAlign={"center"} fontSize={"xs"}>
                     Made by Bimo. <br />
                     @2023 Bimo. Source code{" "}
