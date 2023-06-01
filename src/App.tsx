@@ -1,5 +1,6 @@
 import { Container, Text, useColorModeValue } from "@chakra-ui/react";
 import Navbar from "./components/Navbar";
+import Footer from "./components/Footer";
 
 function App() {
     const bgColor = useColorModeValue("gray.50", "gray.700");
@@ -18,6 +19,7 @@ function App() {
                     fontStyle={"italic"}>
                     Tell something
                 </Text>
+                <Footer />
             </Container>
         </>
     );
