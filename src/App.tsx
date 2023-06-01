@@ -2,6 +2,7 @@ import { Container, Text, useColorModeValue } from "@chakra-ui/react";
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
 import MessageForm from "./components/MessageForm";
+import MessageCard from "./components/MessageCard";
 
 function App() {
     const bgColor = useColorModeValue("gray.50", "gray.700");
@@ -21,6 +22,9 @@ function App() {
                     Tell something
                 </Text>
                 <MessageForm />
+                {Array.from({ length: 10 }, (v, i) => (
+                    <MessageCard />
+                ))}
                 <Footer />
             </Container>
         </>
