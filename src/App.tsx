@@ -1,11 +1,13 @@
-import { Container, Text, useColorModeValue } from "@chakra-ui/react";
+import { Box, Container, Spinner, Text, useColorModeValue } from "@chakra-ui/react";
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
 import MessageForm from "./components/MessageForm";
 import MessageCard from "./components/MessageCard";
+import useMessageQuery from "./api/useMessageQuery";
 
 function App() {
     const bgColor = useColorModeValue("gray.50", "gray.700");
+    const { data, isFetching } = useMessageQuery();
 
     return (
         <>
@@ -18,13 +20,22 @@ function App() {
                     rounded={"xl"}
                     w={"full"}
                     fontSize={"md"}
-                    fontStyle={"italic"}>
+                    fontStyle={"italic"}
+                    my={4}>
                     Tell something
                 </Text>
                 <MessageForm />
-                {Array.from({ length: 10 }, (v, i) => (
-                    <MessageCard />
-                ))}
+                {isFetching ? (
+                    <Box w={'full'} my={4} textAlign={'center'}>
+                        <Spinner />
+                    </Box>
+                ) : (
+                    data?.map((el) => {
+                        return (
+                            <MessageCard key={el?.id} message={el?.message} time={el?.created_at} />
+                        );
+                    })
+                )}
                 <Footer />
             </Container>
         </>

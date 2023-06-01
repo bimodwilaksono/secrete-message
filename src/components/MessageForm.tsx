@@ -1,5 +1,13 @@
-import { Box, Button, FormControl, FormErrorMessage, FormLabel, Textarea } from "@chakra-ui/react";
+import {
+    Box,
+    Button,
+    FormControl,
+    FormErrorMessage,
+    FormLabel,
+    Textarea,
+} from "@chakra-ui/react";
 import { useForm } from "react-hook-form";
+import useMessageMutation from "../api/useMessageMutation";
 
 const MessageForm = (): JSX.Element => {
     const {
@@ -7,22 +15,17 @@ const MessageForm = (): JSX.Element => {
         register,
         formState: { errors, isSubmitting },
     } = useForm();
+    const { mutate } = useMessageMutation();
 
-    function onSubmit(values) {
-        console.log("value", values);
-        return new Promise((resolve) => {
-            setTimeout(() => {
-                alert(JSON.stringify(values, null, 2));
-                resolve();
-            }, 3000);
-        });
+    function onSubmit(values: any) {
+        mutate(values?.message);
     }
 
     return (
         <>
             <Box w={"full"}>
                 <form onSubmit={handleSubmit(onSubmit)}>
-                    <FormControl isInvalid={errors.message}>
+                    <FormControl isInvalid={Boolean(errors.message)}>
                         <FormLabel htmlFor='message'>Message : </FormLabel>
                         <Textarea
                             id='message'
@@ -33,7 +36,7 @@ const MessageForm = (): JSX.Element => {
                             })}
                         />
                         <FormErrorMessage>
-                            {errors.message && errors.message.message}
+                            {errors.message && errors.message.message?.toString()}
                         </FormErrorMessage>
                     </FormControl>
                     <Button mt={4} colorScheme='teal' isLoading={isSubmitting} type='submit'>
